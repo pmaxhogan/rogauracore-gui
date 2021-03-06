@@ -7,7 +7,7 @@ const child_process = require("child_process")
 
 // needs to be declared globally to avoid being garbage collected
 // https://stackoverflow.com/questions/58594357/nodejs-electron-tray-icon-disappearing-after-a-minute
-let appIcon
+let tray
 
 // Menu.setApplicationMenu(Menu.buildFromTemplate([{
 //     label: 'File',
@@ -66,7 +66,7 @@ const setRainbow = speed => {
 const setColor = color => {
     currentColor = color;
     // if you set a color you probably want to see it
-    if(brightness === 0) setBrightness(3);
+    if(brightness === 0 && color !== "black") setBrightness(3);
     console.log(`Setting color to ${color}`);
     runCommand(color);
 };
@@ -97,7 +97,9 @@ magenta
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-    appIcon = new Tray(path.join(__dirname, "rainbow.png"))
+    tray = new Tray(path.join(__dirname, "rainbow.png"))
+    tray.setToolTip("Rogauracore GUI");
+    tray.setIgnoreDoubleClickEvents(true);
     const contextMenu = Menu.buildFromTemplate([
         { enabled: false, label: "Rogauracore GUI" },
         {type: "separator"},
@@ -131,11 +133,13 @@ app.whenReady().then(() => {
                 label: "3",
                 click: () => setBrightness(3)
             }
-        ]}
+        ]},
+        {type: "separator"},
+        {label: "Quit", click: () => app.quit()}
     ]));
-    appIcon.setContextMenu(contextMenu);
+    tray.setContextMenu(contextMenu);
 
-    appIcon.on('click', () => {
+    tray.on('click', () => {
         if(currentColor === "black") {
             setRainbow(1);
         }else{

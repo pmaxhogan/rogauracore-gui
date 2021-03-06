@@ -1,11 +1,19 @@
 {
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-builder"
   },
+  "version": "0.0.1",
+  "name": "rogauracore-gui",
+  "author": "Programmer5000",
+  "description": "GUI for Rogauracore",
+  "productName": "Rogauracore GUI",
+  "build": {},
   "repository": "https://github.com/realprogrammer5000/rogauracore-gui",
   "devDependencies": {
-    "electron": "^10.1.3"
+    "electron": "^10.1.3",
+    "electron-builder": "^22.10.5"
   },
   "dependencies": {
     "which": "^2.0.2"
