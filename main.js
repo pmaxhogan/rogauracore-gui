@@ -38,12 +38,17 @@ const checkSuid = () => {
 };
 
 const runCommand = (args) => {
+    try{
     child_process.execSync(`rogauracore ${args}`);
+}catch(e){console.error(e, e.stdout.toString(), e.stderr.toString())}
 };
 
 const initalize = () => {
     console.log(`Initalizing`);
+child_process.execSync("echo hi");
+try{
     runCommand("initialize_keyboard");
+}catch(e){console.error(e, e.stdout.toString(), e.stderr.toString())}
 };
 
 let brightness = 0;
